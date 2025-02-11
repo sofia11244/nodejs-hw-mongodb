@@ -31,10 +31,6 @@ const contactSchema = new Schema(
   },
   {
     timestamps: true, // Automatically add createdAt and updatedAt fields
-    versionKey: false, // Disable the version key (_v) on documents
   }
 );
-
-// Exporting the model so it can be used elsewhere
-// ContactsCollection will store contact information with the schema defined above
 export const ContactsCollection = model('contacts', contactSchema);

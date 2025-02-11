@@ -11,6 +11,10 @@ export const getAllContacts = async () => {
 
 // Function to get a contact by ID
 export const getContactsById = async (contactId) => {
-  const contact = await ContactsCollection.findById(contactId);
-  return contact;
+  try{
+    const contact = await ContactsCollection.findById(contactId);
+    return contact;
+  } catch (error) {
+    console.log(error);
+  }
 };
