@@ -5,7 +5,7 @@ import pino from 'pino';
 // import mongoose from 'mongoose';
 import { getAllContacts, getContactsById } from './services/contacts.js';
 
-const PORT = process.env.PORT || 3000; // Use the port provided by the hosting platform
+const PORT = process.env.PORT || 4000; // Use the port provided by the hosting platform
 
 const logger = pino({
   level: 'info',
