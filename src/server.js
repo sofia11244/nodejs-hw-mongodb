@@ -1,17 +1,19 @@
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino';
-// import { env } from './utils/env.js';
-// import mongoose from 'mongoose';
+import { initMongoDB } from './db/initMongoDB.js';  // Import your MongoDB init function
 import { getAllContacts, getContactsById } from './services/contacts.js';
 
-const PORT = process.env.PORT || 4000; // Use the port provided by the hosting platform
+const PORT = process.env.PORT || 5000;
 
 const logger = pino({
   level: 'info',
 });
 
-export const SetupServer = () => {
+export const SetupServer = async () => {
+  // Call initMongoDB to establish the MongoDB connection before starting the server
+  await initMongoDB();
+
   const app = express();
   app.use(express.json());
   app.use(cors());
@@ -24,20 +26,23 @@ export const SetupServer = () => {
   });
 
   app.get('/contacts', async (req, res) => {
-    logger.info();
-    const contacts = await getAllContacts();
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully found contacts!',
-      data: contacts,
-    });
+    try {
+      const contacts = await getAllContacts();
+      res.status(200).json({
+        status: 200,
+        message: 'Successfully found contacts!',
+        data: contacts,
+      });
+    } catch (error) {
+      logger.error('Error fetching contacts', error);
+      res.status(500).json({ message: 'Server error' });
+    }
   });
 
-  // Correct usage of getContactsById as a route handler
   app.get('/contacts/:contactId', async (req, res) => {
-    const { contactId } = req.params; // Get contactId from URL
+    const { contactId } = req.params;
     try {
-      const contact = await getContactsById(contactId); // Call the function with contactId
+      const contact = await getContactsById(contactId);
       if (!contact) {
         return res.status(404).json({ message: 'Contact not found' });
       }
@@ -47,7 +52,7 @@ export const SetupServer = () => {
         data: contact,
       });
     } catch (error) {
-      console.error('Error fetching contact:', error);
+      logger.error('Error fetching contact', error);
       res.status(500).json({ message: 'Server error' });
     }
   });
