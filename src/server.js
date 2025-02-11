@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import pino from 'pino';
 import { env } from './utils/env.js';
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 import { getAllContacts, getContactsById } from './services/contacts.js';
 
 const PORT = Number(env('PORT', '3000'));
@@ -33,47 +33,32 @@ export const SetupServer = () => {
     });
   });
 
+  // Correct usage of getContactsById as a route handler
   app.get('/contacts/:contactId', async (req, res) => {
-    const { contactId } = req.params;
-    logger.info(`Received request to fetch contact with ID: ${contactId}`);
-  
-    if (!mongoose.Types.ObjectId.isValid(contactId)) {
-      logger.warn(`Invalid contact ID format: ${contactId}`);
-      return res.status(404).json({
-        message: 'Contact not found',
-      });
-    }
-  
+    const { contactId } = req.params; // Get contactId from URL
     try {
-      const contact = await getContactsById(contactId);
+      const contact = await getContactsById(contactId); // Call the function with contactId
       if (!contact) {
-        logger.warn(`No contact found with ID: ${contactId}`);
-        return res.status(404).json({
-          message: 'Contact not found',
-        });
+        return res.status(404).json({ message: 'Contact not found' });
       }
-      logger.info(`Successfully found contact with ID: ${contactId}`);
       res.status(200).json({
         status: 200,
-        message: `Successfully found contact with id:${contactId}!`,
+        message: `Successfully found contact with id: ${contactId}`,
         data: contact,
       });
-    } catch (e) {
-      logger.error('Error fetching contact:', e);
-      res.status(400).json({
-        message: 'Invalid contact ID',
-      });
+    } catch (error) {
+      console.error('Error fetching contact:', error);
+      res.status(500).json({ message: 'Server error' });
     }
   });
-  
 
-  app.use('*', (req, res, next) => {
+  app.use('*', (req, res) => {
     res.status(404).json({
       message: 'Not Found',
     });
   });
 
   app.listen(PORT, () => {
-    console.log(`server running on ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
   });
 };
