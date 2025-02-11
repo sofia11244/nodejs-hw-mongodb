@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino';
+import { initMongoDB } from './db/initMongoDB.js';  // Import your MongoDB init function
 import { getAllContacts, getContactsById } from './services/contacts.js';
 
 const PORT = process.env.PORT || 5000;
@@ -10,7 +11,8 @@ const logger = pino({
 });
 
 export const SetupServer = async () => {
-
+  // Call initMongoDB to establish the MongoDB connection before starting the server
+  await initMongoDB();
 
   const app = express();
   app.use(express.json());
