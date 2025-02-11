@@ -19,7 +19,7 @@ export const SetupServer = async () => {
   app.get('/', (req, res) => {
     logger.info('GET request received on /');
     res.json({
-      message: 'Hello world!',
+      message: 'Hi there!',
     });
   });
 
