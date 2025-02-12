@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import pino from 'pino';
 import contactsRouter from './routers/contacts.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
 const PORT = process.env.PORT || 5000;
 const logger = pino({ level: 'info' });
@@ -13,15 +15,14 @@ export const SetupServer = async () => {
 
   app.get('/', (req, res) => {
     logger.info('GET request received on /');
-    res.json({ message: 'Hi there!' });
+    res.json({ message: '3rd Homework is Hereee!' });
   });
 
-  // Yeni yönlendirme
   app.use('/contacts', contactsRouter);
 
-  app.use('*', (req, res) => {
-    res.status(404).json({ message: 'Not Found' });
-  });
+  app.use('*', notFoundHandler);
+
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     console.log(`Server running on port "${PORT}"`);

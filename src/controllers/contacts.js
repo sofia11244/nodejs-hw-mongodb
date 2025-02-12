@@ -1,0 +1,39 @@
+
+import { getAllContacts, getContactsById } from '../services/contacts.js';
+import createHttpError from 'http-errors';
+
+
+export const getAllContactsController = async (req, res,next) => {
+    try {
+      const contacts = await getAllContacts();
+      res.json({
+        status: 200,
+        message: 'Successfully found contacts!',
+        data: contacts,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+
+  export const getContactsByIdController = async (
+    req,
+    res,
+  ) => {
+    const { contactId } = req.params;
+    const contact = await getContactsById(contactId);
+  
+  // GET /contacts/:contactId - Belirli ID'ye sahip kişiyi getir
+      if (!contact) {
+        throw createHttpError(404, 'Student not found');
+      }
+  
+      // Öğrenci bulunursa cevap
+    res.json({
+      status: 200,
+      message: `Successfully found contact with id: ${contactId}`,
+      data: contact,
+    });
+  };
+  
