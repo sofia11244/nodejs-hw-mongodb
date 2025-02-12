@@ -10,9 +10,11 @@ getContactsByIdController,
 
 const router = Router();
 
-router.get('/contacts', ctrlWrapper(getAllContactsController));
+// Çünkü server.js içinde zaten /contacts yolunu verdin bu yüzden conatcs eklemene gerek yok.
 
-router.get('/contacts/:contactId', ctrlWrapper(getContactsByIdController));
+router.get('/', ctrlWrapper(getAllContactsController));
+
+router.get('/:contactId', ctrlWrapper(getContactsByIdController));
 export default router;
 
 
