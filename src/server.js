@@ -10,7 +10,17 @@ const logger = pino({ level: 'info' });
 
 export const SetupServer = async () => {
   const app = express();
-  app.use(express.json());
+  app.use(
+    express.json({
+      type: ['application/json', 'application/vnd.api+json'],
+      limit: '100kb',
+    }),
+  );
+  // istek gövdesini işleyebilmek (parse edebilmek) için 
+  // Express'te ek bir yapılandırma yapılması gereklidir.
+
+  // Ancak, bu yalnızca istek içerisinde 
+  // Content-Type başlığının application/json olarak ayarlandığı durumlarda geçerlidir
   app.use(cors());
 
   app.get('/', (req, res) => {
