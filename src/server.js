@@ -5,7 +5,7 @@ import contactsRouter from './routers/contacts.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 const logger = pino({ level: 'info' });
 
 export const SetupServer = async () => {
