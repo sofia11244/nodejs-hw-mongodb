@@ -8,6 +8,7 @@ getContactsByIdController,
 createContactController,
 deleteContactController,
 upsertContactController,
+patchContactController
 } from '../controllers/contacts.js';
 
 
@@ -25,6 +26,7 @@ router.delete('/contacts/:contactId', ctrlWrapper(deleteContactController));
 
 router.put('/contacts/:contactId', ctrlWrapper(upsertContactController));
 
+router.patch('/contacts/:contactId', ctrlWrapper(patchContactController));
 
 export default router;
 
