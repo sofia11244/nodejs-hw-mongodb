@@ -18,3 +18,8 @@ export const getContactsById = async (contactId) => {
     console.log(error);
   }
 };
+
+export const createContact = async (payload) => {
+  const student = await ContactsCollection.create(payload);
+  return student;
+};
