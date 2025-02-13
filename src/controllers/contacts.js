@@ -26,7 +26,7 @@ export const getAllContactsController = async (req, res,next) => {
   
   // GET /contacts/:contactId - Belirli ID'ye sahip kişiyi getir
       if (!contact) {
-        throw createHttpError(404, 'Student not found');
+        throw createHttpError(404, 'Contact not found');
       }
   
       // Öğrenci bulunursa cevap
@@ -41,11 +41,27 @@ export const getAllContactsController = async (req, res,next) => {
   import { createContact } from '../services/contacts.js';
 
 export const createContactController = async (req, res) => {
-  const student = await createContact(req.body);
+  const contact = await createContact(req.body);
 
   res.status(201).json({
     status: 201,
     message: `Successfully created a contact!`,
-    data: student,
+    data: contact,
   });
+};
+
+
+import { deleteContact } from "../services/contacts.js";
+
+export const deleteContactController = async (req, res, next) => {
+  const { contactId } = req.params;
+
+  const contact = await deleteContact(contactId);
+
+  if (!contact) {
+    next(createHttpError(404, 'contact not found'));
+    return;
+  }
+
+  res.status(204).send();
 };
