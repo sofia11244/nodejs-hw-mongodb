@@ -4,6 +4,8 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { createContactSchema } from '../validation/contacts.js';
 import { updateContactSchema } from '../validation/contacts.js';
+import { isValidId } from '../middlewares/isValidId.js';
+
 import {
     getAllContactsController,
 getContactsByIdController,
@@ -20,7 +22,7 @@ const router = Router();
 
 router.get('/', ctrlWrapper(getAllContactsController));
 
-router.get('/:contactId', ctrlWrapper(getContactsByIdController));
+router.get('/:contactId', isValidId, ctrlWrapper(getContactsByIdController));
 
 router.post('/', validateBody(createContactSchema), ctrlWrapper(createContactController));
 
