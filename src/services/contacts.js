@@ -1,32 +1,49 @@
-
 // src/services/contacts.js
 
-import { ContactsCollection } from '../db/models/contacts.js'; // Import the contacts model
+import { ContactsCollection } from '../db/models/contacts.js'; // İletişim modelini import et
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 import { SORT_ORDER } from '../constants/index.js';
 
-
-
-// Function to get all contacts
+// Tüm iletişimleri almak için fonksiyon
 export const getAllContacts = async ({
   page = 1,
   perPage = 10,
   sortOrder = SORT_ORDER.ASC,
   sortBy = '_id',
-})  => {
+  filter = {},
+}) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
+  // Başlangıçta tüm iletişimleri alıyoruz
   const contactsQuery = ContactsCollection.find();
-  const contactsCount = await ContactsCollection.find()
-    .merge(contactsQuery)
-    .countDocuments();
 
-  const contacts = await contactsQuery
-  .skip(skip)
-  .limit(limit)
-  .sort({ [sortBy]: sortOrder })
-  .exec();
+  // Filtreleme işlemleri
+  if (filter.gender) {
+    contactsQuery.where('gender').equals(filter.gender);
+  }
+  if (filter.contactType) {
+    contactsQuery.where('contactType').equals(filter.contactType);
+  }
+  if (filter.maxAge) {
+    contactsQuery.where('age').lte(filter.maxAge);
+  }
+  if (filter.minAge) {
+    contactsQuery.where('age').gte(filter.minAge);
+  }
+  if (filter.isFavourite !== undefined) {
+    contactsQuery.where('isFavourite').equals(filter.isFavourite);
+  }
+
+  // Filtrelenmiş iletişimlerin sayısını alıyoruz
+  const [contactsCount, contacts] = await Promise.all([
+    ContactsCollection.find().merge(contactsQuery).countDocuments(),
+    contactsQuery
+      .skip(skip)
+      .limit(limit)
+      .sort({ [sortBy]: sortOrder })
+      .exec(),
+  ]);
 
   const paginationData = calculatePaginationData(contactsCount, perPage, page);
 
@@ -36,9 +53,9 @@ export const getAllContacts = async ({
   };
 };
 
-// Function to get a contact by ID
+// ID'ye göre bir iletişimi almak için fonksiyon
 export const getContactsById = async (contactId) => {
-  try{
+  try {
     const contact = await ContactsCollection.findById(contactId);
     return contact;
   } catch (error) {
@@ -46,11 +63,13 @@ export const getContactsById = async (contactId) => {
   }
 };
 
+// Yeni iletişim oluşturma fonksiyonu
 export const createContact = async (payload) => {
   const contact = await ContactsCollection.create(payload);
   return contact;
 };
 
+// İletişimi silme fonksiyonu
 export const deleteContact = async (contactId) => {
   const contact = await ContactsCollection.findOneAndDelete({
     _id: contactId,
@@ -59,6 +78,7 @@ export const deleteContact = async (contactId) => {
   return contact;
 };
 
+// İletişimi güncelleme fonksiyonu
 export const updateContact = async (contactId, payload, options = {}) => {
   const rawResult = await ContactsCollection.findOneAndUpdate(
     { _id: contactId },
