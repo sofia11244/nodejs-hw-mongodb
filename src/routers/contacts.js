@@ -32,6 +32,12 @@ router.put('/:contactId', ctrlWrapper(upsertContactController));
 
 router.patch('/:contactId', validateBody(updateContactSchema), ctrlWrapper(patchContactController));
 
+router.post(
+    '/register',
+    validateBody(createContactSchema),
+    ctrlWrapper(createContactController),
+  );
+
 export default router;
 
 
