@@ -33,6 +33,7 @@ export const createContactSchema = Joi.object({
       'any.only': 'Contact type must be one of personal, home, or work',
       'any.required': 'Contact type is required',
     }),
+  userId: Joi.string().required(),
 });
 
 // Kullanım örneği

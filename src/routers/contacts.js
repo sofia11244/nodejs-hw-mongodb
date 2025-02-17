@@ -1,43 +1,50 @@
-
 import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { createContactSchema } from '../validation/contacts.js';
 import { updateContactSchema } from '../validation/contacts.js';
 import { isValidId } from '../middlewares/isValidId.js';
+import { authenticate } from '../middlewares/authenticate.js';
+import { checkRoles } from '../middlewares/checkRoles.js';  // Import checkRoles
+import { ROLES } from '../constants/index.js';  // Import ROLES
 
 import {
-    getAllContactsController,
-getContactsByIdController,
-createContactController,
-deleteContactController,
-upsertContactController,
-patchContactController
+  getAllContactsController,
+  getContactsByIdController,
+  createContactController,
+  deleteContactController,
+  upsertContactController,
+  patchContactController
 } from '../controllers/contacts.js';
-
 
 const router = Router();
 
-// Çünkü server.js içinde zaten /contacts yolunu verdin bu yüzden conatcs eklemene gerek yok.
 
-router.get('/', ctrlWrapper(getAllContactsController));
+// Get all contacts (accessible by USER role)
+router.get('/', authenticate, checkRoles(ROLES.USER), ctrlWrapper(getAllContactsController));
 
-router.get('/:contactId', isValidId, ctrlWrapper(getContactsByIdController));
+// Get contact by ID (accessible by USER role)
+router.get('/:contactId', authenticate, checkRoles(ROLES.USER), isValidId, ctrlWrapper(getContactsByIdController));
 
-router.post('/', validateBody(createContactSchema), ctrlWrapper(createContactController));
+// Create a new contact (accessible by USER role)
+router.post('/', authenticate, checkRoles(ROLES.USER), validateBody(createContactSchema), ctrlWrapper(createContactController));
 
-router.delete('/:contactId', ctrlWrapper(deleteContactController));
+// Delete a contact (accessible by USER role)
+router.delete('/:contactId', authenticate, checkRoles(ROLES.USER), ctrlWrapper(deleteContactController));
 
-router.put('/:contactId', ctrlWrapper(upsertContactController));
+// Upsert a contact (accessible by USER role)
+router.put('/:contactId', authenticate, checkRoles(ROLES.USER), validateBody(createContactSchema), ctrlWrapper(upsertContactController));
 
-router.patch('/:contactId', validateBody(updateContactSchema), ctrlWrapper(patchContactController));
+// Update a contact (accessible by USER role)
+router.patch('/:contactId', authenticate, checkRoles(ROLES.USER), validateBody(updateContactSchema), ctrlWrapper(patchContactController));
 
+// Register a new contact (accessible by USER role)
 router.post(
-    '/register',
-    validateBody(createContactSchema),
-    ctrlWrapper(createContactController),
-  );
+  '/register',
+  authenticate,
+  checkRoles(ROLES.USER),
+  validateBody(createContactSchema),
+  ctrlWrapper(createContactController),
+);
 
 export default router;
-
-
