@@ -5,6 +5,7 @@ import pino from 'pino';
 import router from './routers/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import cookieParser from 'cookie-parser';
 
 const PORT = process.env.PORT || 8000;
 const logger = pino({ level: 'info' });
@@ -39,4 +40,6 @@ export const SetupServer = async () => {
   app.listen(PORT, () => {
     console.log(`Server running on port "${PORT}"`);
   });
+
+  app.use(cookieParser());
 };
