@@ -7,27 +7,31 @@ import { parseFilterParams } from '../utils/parseFilterParams.js';
 
 
 
-export const getAllContactsController = async (req, res) => {
-  const { page, perPage } = parsePaginationParams(req.query);
-  const filter = parseFilterParams(req.query);
-      const contacts = await getAllContacts(
-        {
-          page,
-          perPage,
-          sortBy,
-          sortOrder,
-          filter,
-        }
-      );
+export const getAllContactsController = async (req, res, next) => {
+  try {
+    // Pagination and filter params
+    const { page, perPage } = parsePaginationParams(req.query);
+    const { sortBy, sortOrder } = parseSortParams(req.query);
+    const filter = parseFilterParams(req.query);
 
-      const { sortBy, sortOrder } = parseSortParams(req.query);
+    // Get contacts with proper parameters
+    const contacts = await getAllContacts({
+      page,
+      perPage,
+      sortBy,
+      sortOrder,
+      filter,
+    });
 
-      res.json({
-        status: 200,
-        message: 'Successfully found contacts!',
-        data: contacts,
-      });
-  };
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully found contacts!',
+      data: contacts,
+    });
+  } catch (error) {
+    next(error); // Error handling with next to go to error middleware
+  }
+};
 
 
   export const getContactsByIdController = async (

@@ -14,39 +14,32 @@ export const getAllContacts = async ({
 }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
+  
 
   // Başlangıçta tüm iletişimleri alıyoruz
   const contactsQuery = ContactsCollection.find();
 
   // Filtreleme işlemleri
-  if (filter.gender) {
-    contactsQuery.where('gender').equals(filter.gender);
-  }
+
   if (filter.contactType) {
     contactsQuery.where('contactType').equals(filter.contactType);
-  }
-  if (filter.maxAge) {
-    contactsQuery.where('age').lte(filter.maxAge);
-  }
-  if (filter.minAge) {
-    contactsQuery.where('age').gte(filter.minAge);
   }
   if (filter.isFavourite !== undefined) {
     contactsQuery.where('isFavourite').equals(filter.isFavourite);
   }
 
   // Filtrelenmiş iletişimlerin sayısını alıyoruz
-  const [contactsCount, contacts] = await Promise.all([
-    ContactsCollection.find().merge(contactsQuery).countDocuments(),
-    contactsQuery
-      .skip(skip)
-      .limit(limit)
-      .sort({ [sortBy]: sortOrder })
-      .exec(),
-  ]);
+  const contactsCount = await ContactsCollection.find()
+    .merge(contactsQuery)
+    .countDocuments();
 
+  const contacts = await contactsQuery
+    .skip(skip)
+    .limit(limit)
+    .collation({ locale: 'tr', strength: 1 })
+    .sort({ [sortBy]: sortOrder })
+    .exec();
   const paginationData = calculatePaginationData(contactsCount, perPage, page);
-
   return {
     data: contacts,
     ...paginationData,
@@ -73,6 +66,7 @@ export const createContact = async (payload) => {
 export const deleteContact = async (contactId) => {
   const contact = await ContactsCollection.findOneAndDelete({
     _id: contactId,
+    
   });
 
   return contact;
