@@ -167,3 +167,5 @@ export const resetPassword = async (payload) => {
     await logoutUser(session._id);
   }
 };
+// console.log('JWT_SECRET:', env('JWT_SECRET'));
+// console.log('APP_DOMAIN:', env('APP_DOMAIN'));

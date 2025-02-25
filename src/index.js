@@ -3,10 +3,10 @@
 import { initMongoDB } from './db/initMongoDB.js';
 import { SetupServer } from './server.js';
 import dotenv from 'dotenv';
+dotenv.config();
 import { createDirIfNotExists } from './utils/createDirIfNotExists.js';
 import { TEMP_UPLOAD_DIR, UPLOAD_DIR } from './constants/index.js';
 
-dotenv.config();
 
 const bootstrap = async () => {
   await initMongoDB();
