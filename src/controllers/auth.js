@@ -12,6 +12,7 @@ import {
 
 // Validation for reset password
 export const validateResetPassword = [
+  body('email').isEmail().withMessage('Valid email is required'),
   body('password').optional().isString().withMessage('Password must be a string').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
   body('token').optional().isString().withMessage('Token must be a string'),
   (req, res, next) => {

@@ -13,6 +13,7 @@ import { requestResetEmailSchema } from '../validation/auth.js';
 import { requestResetEmailController } from '../controllers/auth.js';
 import { resetPasswordSchema } from '../validation/auth.js';
 import { resetPasswordController } from '../controllers/auth.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const router = Router();
 
@@ -35,12 +36,14 @@ router.post(
 
   router.post(
     '/request-reset-email',
+    authenticate,
     validateBody(requestResetEmailSchema),
     ctrlWrapper(requestResetEmailController),
   );
 
   router.post(
     '/reset-password',
+    
     validateBody(resetPasswordSchema),
     ctrlWrapper(resetPasswordController),
   );
