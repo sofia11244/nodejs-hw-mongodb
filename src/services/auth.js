@@ -11,7 +11,10 @@ import { sendEmail } from '../utils/sendMail.js';
 import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import { TEMPLATES_DIR } from '../constants/index.js';
+
+// TEMPLATES_DIR sabitini buraya ekliyoruz
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+export const TEMPLATES_DIR = path.join(__dirname, '..', 'templates');
 
 export const registerUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
@@ -160,6 +163,7 @@ export const resetPassword = async (payload) => {
   );
 
   const session = await SessionsCollection.findOne({ userId: user._id }).exec();
-  console.log(session);
-  if (session !== null) logoutUser(session._id);
+  if (session !== null) {
+    await logoutUser(session._id);
+  }
 };
