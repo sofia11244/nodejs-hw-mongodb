@@ -6,7 +6,6 @@ import createHttpError from 'http-errors';
 import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
 import { SessionsCollection } from '../db/models/session.js';
 
-const TEMPLATES_DIR = path.join(process.cwd(), 'templates');
 
 
 import { UsersCollection } from '../db/models/contacts.js';
@@ -22,7 +21,6 @@ export const registerUser = async (payload) => {
     password: encryptedPassword,
   });
 };
-
 
 export const loginUser = async (payload) => {
     const user = await UsersCollection.findOne({ email: payload.email });
@@ -118,9 +116,12 @@ export const requestResetToken = async (email) => {
     },
   );
 
+  const TEMPLATES_DIR = path.join(process.cwd(), 'src', 'templates');
+
+
   const resetPasswordTemplatePath = path.join(
     TEMPLATES_DIR,
-    'reset-password-email.html',
+    'reset-password-email.html'
   );
 
   const templateSource = (
@@ -140,8 +141,6 @@ export const requestResetToken = async (email) => {
     html,
   });
 };
-
-// src/services/auth.js
 
 export const resetPassword = async (payload) => {
   let entries;
