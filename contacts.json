@@ -11,8 +11,7 @@
   {
     "name": "Fatma Kaya",
     "phoneNumber": "+380000000002",
-    "email": "demir3@example.com",
-
+    "email": null,
     "isFavourite": false,
     "contactType": "personal",
     "createdAt": "2024-05-08T16:12:14.954163",
@@ -30,8 +29,7 @@
   {
     "name": "Güzel Çelik",
     "phoneNumber": "+380000000004",
-    "email": "demir3@example.com",
-
+    "email": null,
     "isFavourite": false,
     "contactType": "personal",
     "createdAt": "2024-05-08T16:12:14.954173",
@@ -49,8 +47,7 @@
   {
     "name": "Ceren Şahin",
     "phoneNumber": "+380000000006",
-    "email": "demir3@example.com",
-
+    "email": null,
     "isFavourite": false,
     "contactType": "home",
     "createdAt": "2024-05-08T16:12:14.954182",
@@ -68,8 +65,7 @@
   {
     "name": "Ergem Öztürk",
     "phoneNumber": "+380000000008",
-    "email": "demir3@example.com",
-
+    "email": null,
     "isFavourite": false,
     "contactType": "personal",
     "createdAt": "2024-05-08T16:12:14.954196",
@@ -87,8 +83,7 @@
   {
     "name": "Erden Özdemir",
     "phoneNumber": "+3800000000010",
-    "email": "demir3@example.com",
-
+    "email": null,
     "isFavourite": false,
     "contactType": "personal",
     "createdAt": "2024-05-08T16:12:14.954208",
