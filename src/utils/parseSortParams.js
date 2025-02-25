@@ -12,14 +12,14 @@ const parseSortOrder = (sortOrder) => {
 // Sıralama yapılacak alanları doğrulayan fonksiyon
 const parseSortBy = (sortBy) => {
   const keysOfContact = [
-    '_id',            // ID alanı
-    'name',           // İsim
-    'phoneNumber',    // Telefon numarası
-    'email',          // E-posta
-    'isFavourite',    // Favori olup olmadığı
-    'contactType',    // İletişim tipi (personal, home, work)
-    'createdAt',      // Oluşturulma tarihi
-    'updatedAt',      // Güncellenme tarihi
+    '_id',
+    'name',           
+    'phoneNumber',    
+    'email',          
+    'isFavourite',    
+    'contactType',    
+    'createdAt',      
+    'updatedAt',      
   ];
 
   if (keysOfContact.includes(sortBy)) {
