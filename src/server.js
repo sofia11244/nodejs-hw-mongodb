@@ -6,6 +6,7 @@ import router from './routers/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import cookieParser from 'cookie-parser';
+import { UPLOAD_DIR } from './constants/index.js';
 
 const PORT = process.env.PORT || 8000;
 const logger = pino({ level: 'info' });
@@ -27,7 +28,7 @@ export const SetupServer = async () => {
 
   app.get('/', (req, res) => {
     logger.info('GET request received on /');
-    res.json({ message: '3rd Homework is Hereee!' });
+    res.json({ message: '5th Homework is Hereee!' });
   });
 
   // app.use('/contacts', contactsRouter);
@@ -42,4 +43,6 @@ export const SetupServer = async () => {
   });
 
   app.use(cookieParser());
+
+  app.use('/uploads', express.static(UPLOAD_DIR));
 };

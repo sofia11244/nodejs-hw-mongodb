@@ -6,8 +6,8 @@ import { createContactSchema } from '../validation/contacts.js';
 import { updateContactSchema } from '../validation/contacts.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import { authenticate } from '../middlewares/authenticate.js';
-// import { checkRoles } from '../middlewares/checkRoles.js';
-// import { ROLES } from '../constants/index.js';
+import { checkRoles } from '../middlewares/checkRoles.js';
+import { ROLES } from '../constants/index.js';
 
 
 import {
@@ -51,3 +51,33 @@ router.get('/', ctrlWrapper(getContactsByIdController));
 export default router;
 
 
+import { upload } from '../middlewares/multer.js';
+
+/* Dosyanın diğer kodları */
+
+router.post(
+  '/',
+  checkRoles(ROLES.USER), 
+  isValidId,
+  upload.single('photo'), // bu middleware'i ekliyoruz
+  validateBody(createContactSchema), 
+  ctrlWrapper(createContactController), 
+);
+
+router.put(
+  '/:contactId',
+  checkRoles(ROLES.USER),
+  isValidId,
+  upload.single('photo'), // bu middleware'i ekliyoruz
+  validateBody(createContactSchema), 
+  ctrlWrapper(upsertContactController),
+);
+
+router.patch(
+  '/:contactId',
+  checkRoles(ROLES.USER),
+  isValidId,
+  upload.single('photo'), // bu middleware'i ekliyoruz
+  validateBody(updateContactSchema),
+  ctrlWrapper(patchContactController), 
+);

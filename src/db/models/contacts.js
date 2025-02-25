@@ -29,6 +29,7 @@ const contactSchema = new Schema(
       enum: ['personal', 'home', 'work'],
     },
     userId: { type: Schema.Types.ObjectId, ref: 'users' },
+    photo: { type: String, default: null },
   },
   {
     timestamps: true, // Automatically add createdAt and updatedAt fields
