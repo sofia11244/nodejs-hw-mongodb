@@ -15,8 +15,6 @@ const contactSchema = new Schema(
     },
     email: {
       type: String,
-      required: false,
-      default: null,
     },
     isFavourite: {
       type: Boolean,
@@ -40,21 +38,3 @@ export const ContactsCollection = model('contacts', contactSchema);
 
 // ------------------------------
 
-import { ROLES } from '../../constants/index.js';
-
-
-const usersSchema = new Schema(
-  {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: {
-      type: String,
-      enum: [ROLES.USER],
-      default: ROLES.USER,
-    },
-  },
-  { timestamps: true, versionKey: false },
-);
-
-export const UsersCollection = model('users', usersSchema);

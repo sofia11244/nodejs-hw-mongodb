@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import { UsersCollection } from '../db/models/contacts.js';
+import { UsersCollection } from '../db/models/user.js';
 import { SessionsCollection } from '../db/models/session.js';
 import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
@@ -40,7 +40,14 @@ export const loginUser = async (payload) => {
   }
 
   await SessionsCollection.deleteOne({ userId: user._id });
-  const accessToken = randomBytes(30).toString('base64');
+  // const accessToken = randomBytes(30).toString('base64');
+
+  const accessToken = jwt.sign(
+    { userId: user._id, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: '15m' }
+  );
+
   const refreshToken = randomBytes(30).toString('base64');
 
   return await SessionsCollection.create({
