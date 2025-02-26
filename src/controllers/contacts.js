@@ -107,12 +107,31 @@ export const upsertContactController = async (req, res, next) => {
   });
 };
 
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+import { env } from '../utils/env.js';
+
 export const patchContactController = async (req, res, next) => {
   const { contactId } = req.params;
-  const result = await updateContact(contactId, req.body);
+  const photo = req.file;
+
+  let photoUrl;
+
+  if (photo) {
+    if (env('ENABLE_CLOUDINARY') === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = await saveFileToUploadDir(photo);
+    }
+  }
+
+  const result = await updateContact(contactId, {
+    ...req.body,
+    photo: photoUrl,
+  });
 
   if (!result) {
-    next(createHttpError(404, 'contact not found'));
+    next(createHttpError(404, 'Contact not found'));
     return;
   }
 
@@ -122,3 +141,18 @@ export const patchContactController = async (req, res, next) => {
     data: result.contact,
   });
 };
+
+
+
+/* photo'da dosya nesnesi bulunur
+		{
+		  fieldname: 'photo',
+		  originalname: 'download.jpeg',
+		  encoding: '7bit',
+		  mimetype: 'image/jpeg',
+		  destination: '/Users/borysmeshkov/Projects/goit-study/contacts-app/temp',
+		  filename: '1710709919677_download.jpeg',
+		  path: '/Users/borysmeshkov/Projects/goit-study/contacts-app/temp/1710709919677_download.jpeg',
+		  size: 7
+	  }
+	*/

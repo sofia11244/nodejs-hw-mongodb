@@ -6,6 +6,7 @@ import router from './routers/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import cookieParser from 'cookie-parser';
+import { UPLOAD_DIR } from './constants/index.js';
 
 const PORT = process.env.PORT || 8000;
 const logger = pino({ level: 'info' });
@@ -42,4 +43,6 @@ export const SetupServer = async () => {
   });
 
   app.use(cookieParser());
+  
+  app.use('/uploads', express.static(UPLOAD_DIR));
 };
