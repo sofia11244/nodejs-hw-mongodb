@@ -15,8 +15,6 @@ const contactSchema = new Schema(
     },
     email: {
       type: String,
-      required: false,
-      default: null,
     },
     isFavourite: {
       type: Boolean,
@@ -29,6 +27,7 @@ const contactSchema = new Schema(
       enum: ['personal', 'home', 'work'],
     },
     userId: { type: Schema.Types.ObjectId, ref: 'users' },
+    photo: { type: String, default: null },
   },
   {
     timestamps: true, // Automatically add createdAt and updatedAt fields
@@ -38,22 +37,3 @@ const contactSchema = new Schema(
 export const ContactsCollection = model('contacts', contactSchema);
 
 // ------------------------------
-
-import { ROLES } from '../../constants/index.js';
-
-
-const usersSchema = new Schema(
-  {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: {
-      type: String,
-      enum: [ROLES.USER],
-      default: ROLES.USER,
-    },
-  },
-  { timestamps: true, versionKey: false },
-);
-
-export const UsersCollection = model('users', usersSchema);
