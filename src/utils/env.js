@@ -13,3 +13,8 @@ export function env(name, defaultValue) {
 
   throw new Error(`Missing: process.env['${name}'].`);
 }
+
+export const ENV_VARS = {
+  GOOGLE_AUTH_CLIENT_ID: 'GOOGLE_AUTH_CLIENT_ID',
+  GOOGLE_AUTH_CLIENT_SECRET: 'GOOGLE_AUTH_CLIENT_SECRET',
+};
