@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 import { UPLOAD_DIR } from './constants/index.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 9000;
 const logger = pino({ level: 'info' });
 
 export const SetupServer = async () => {

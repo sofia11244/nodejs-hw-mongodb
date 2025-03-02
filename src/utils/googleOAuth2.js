@@ -6,7 +6,7 @@ import { env } from './env.js';
 
 // import { ENV_VARS, env } from './env.js';
 
-const PATH_JSON = path.join(process.cwd(), 'src/google-oauth.json');
+const PATH_JSON = path.join(process.cwd(), 'google-oauth-store.json');
 
 const oauthConfig = JSON.parse(await readFile(PATH_JSON));
 
