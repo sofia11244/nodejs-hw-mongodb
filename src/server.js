@@ -8,6 +8,8 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import cookieParser from 'cookie-parser';
 import { UPLOAD_DIR } from './constants/index.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
+import setupSwagger from "../swagger/swagger.js";
+
 
 const PORT = process.env.PORT || 9000;
 const logger = pino({ level: 'info' });
@@ -49,4 +51,5 @@ export const SetupServer = async () => {
   
   app.use('/uploads', express.static(UPLOAD_DIR));
   app.use('/api-docs', swaggerDocs());
+  setupSwagger(app);
 };
