@@ -7,23 +7,30 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import cookieParser from 'cookie-parser';
 import { UPLOAD_DIR } from './constants/index.js';
+import setupSwagger from "../swagger/swagger.js";
 
 const PORT = process.env.PORT || 8000;
 const logger = pino({ level: 'info' });
 
 export const SetupServer = async () => {
   const app = express();
+
+  setupSwagger(app);
+
   app.use(
     express.json({
       type: ['application/json', 'application/vnd.api+json'],
       limit: '100kb',
     }),
   );
+  
+
   // istek gövdesini işleyebilmek (parse edebilmek) için 
   // Express'te ek bir yapılandırma yapılması gereklidir.
 
   // Ancak, bu yalnızca istek içerisinde 
   // Content-Type başlığının application/json olarak ayarlandığı durumlarda geçerlidir
+
   app.use(cors());
 
   app.get('/', (req, res) => {

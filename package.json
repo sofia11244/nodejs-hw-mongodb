@@ -5,14 +5,19 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build-docs",
+    "build-docs": "redocly bundle docs/openapi.yaml --ext json -o docs/swagger.json",
+    "preview-docs": "redocly preview-docs docs/openapi.yaml",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Deniz Sofia U <denizsofia03@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.20.0",
+    "@redocly/cli": "^1.33.0",
     "eslint": "^9.20.0",
     "eslint-plugin-import": "^2.31.0",
     "globals": "^15.14.0",
@@ -35,6 +40,8 @@
     "nodemailer": "^6.10.0",
     "pino": "^9.6.0",
     "pino-http": "^10.4.0",
-    "pino-pretty": "^13.0.0"
+    "pino-pretty": "^13.0.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }
