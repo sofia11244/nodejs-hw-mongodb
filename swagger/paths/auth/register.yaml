@@ -13,11 +13,11 @@ requestBody:
         properties:
           name:
             type: string
-            example: Heza Gölcük
+            example: sofia ulutaş
           email:
             type: string
             format: email
-            example: hezagolcuk@example.com
+            example: sofiagolcuk@example.com
           password:
             type: string
             format: password
@@ -44,10 +44,10 @@ responses:
                   example: 67b8a93fc40dfd0da930f230
                 name:
                   type: string
-                  example: Heza Gölcük
+                  example: sofia ulutaş
                 email:
                   type: string
-                  example: heza@gmail.com
+                  example: sofia@gmail.com
                 createdAt:
                   type: string
                   format: date-time
@@ -80,7 +80,7 @@ responses:
                   example: 400
                 body:
                   type: string
-                  example: "{ \"name\": \"Heza Gölcük\",\r\n    \r\n    \r\n}"
+                  example: "{ \"name\": \"sofia ulutaş\",\r\n    \r\n    \r\n}"
                 type:
                   type: string
                   example: entity.parse.failed

@@ -426,12 +426,12 @@
                   "properties": {
                     "name": {
                       "type": "string",
-                      "example": "Heza Gölcük"
+                      "example": "sofia ulutaş"
                     },
                     "email": {
                       "type": "string",
                       "format": "email",
-                      "example": "hezagolcuk@example.com"
+                      "example": "sofiagolcuk@example.com"
                     },
                     "password": {
                       "type": "string",
@@ -468,11 +468,11 @@
                           },
                           "name": {
                             "type": "string",
-                            "example": "Heza Gölcük"
+                            "example": "sofia ulutaş"
                           },
                           "email": {
                             "type": "string",
-                            "example": "heza@gmail.com"
+                            "example": "sofia@gmail.com"
                           },
                           "createdAt": {
                             "type": "string",
@@ -519,7 +519,7 @@
                           },
                           "body": {
                             "type": "string",
-                            "example": "{ \"name\": \"Heza Gölcük\",\r\n    \r\n    \r\n}"
+                            "example": "{ \"name\": \"sofia ulutaş\",\r\n    \r\n    \r\n}"
                           },
                           "type": {
                             "type": "string",
@@ -581,7 +581,7 @@
                     "email": {
                       "type": "string",
                       "format": "email",
-                      "example": "hezagolcuk@example.com"
+                      "example": "sofiagolcuk@example.com"
                     },
                     "password": {
                       "type": "string",
@@ -651,7 +651,7 @@
                           },
                           "body": {
                             "type": "string",
-                            "example": "{ \"email\": \"hezagolcuk@example.com\",\r\n    \r\n    \r\n}"
+                            "example": "{ \"email\": \"sofiagolcuk@example.com\",\r\n    \r\n    \r\n}"
                           },
                           "type": {
                             "type": "string",
@@ -783,7 +783,7 @@
                     "email": {
                       "type": "string",
                       "description": "The email address to send the email to.",
-                      "example": "hezagolcuk@gmail.com"
+                      "example": "sofiagolcuk@gmail.com"
                     }
                   }
                 }
@@ -903,7 +903,7 @@
                     "password": {
                       "type": "string",
                       "description": "The new password.",
-                      "example": "heza"
+                      "example": "sofia"
                     },
                     "token": {
                       "type": "string",
